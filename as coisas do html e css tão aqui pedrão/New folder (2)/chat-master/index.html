@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="tailwindcss-colors.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Chat</title>
+</head>
+<body>
+
+    <!-- start: Chat -->
+    <section class="chat-section">
+        <div class="chat-container">
+            <!-- start: Sidebar -->
+            <aside class="chat-sidebar">
+                <a href="#" class="chat-sidebar-logo">
+                    <i class="ri-chat-1-fill"></i>
+                </a>
+                <ul class="chat-sidebar-menu">
+                    <li class="active"><a href="#" data-title="Chats"><i class="ri-chat-3-line"></i></a></li>
+
+                    
+                    <li><a href="#" data-title="Configurações"><i class="ri-settings-line"></i></a></li>
+                    <li class="chat-sidebar-profile">
+                        <button type="button" class="chat-sidebar-profile-toggle">
+                            <img src="data:image/jpeg;base64,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" alt="">
+                        </button>
+                        <ul class="chat-sidebar-profile-dropdown">
+                            <li><a href="#"><i class="ri-user-line"></i> Perfil</a></li>
+                            <li><a href="#"><i class="ri-logout-box-line"></i> Sidebar</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </aside>
+            <!-- end: Sidebar -->
+            <!-- start: Content -->
+            <div class="chat-content">
+                <!-- start: Content side -->
+                <div class="content-sidebar">
+                    <div class="content-sidebar-title">Chats</div>
+                    <form action="" class="content-sidebar-form">
+                        <input type="search" class="content-sidebar-input" placeholder="Pesquisar...">
+                        <button type="submit" class="content-sidebar-submit"><i class="ri-search-line"></i></button>
+                    </form>
+                    <div class="content-messages">
+                        <ul class="content-messages-list">
+                            
+                            <li>
+                                <a href="#" data-conversation="#conversation-1">
+                                    <img class="content-message-image" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
+                                    <span class="content-message-info">
+                                        <span class="content-message-name">Nick</span>
+                                        <span class="content-message-text">Eu tipo, AMO PÉS.</span>
+                                    </span>
+                                    <span class="content-message-more">
+                                        <span class="content-message-unread">5</span>
+                                        <span class="content-message-time">12:30</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" data-conversation="#conversation-2">
+                                    <img class="content-message-image" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
+                                    <span class="content-message-info">
+                                        <span class="content-message-name">Inba</span>
+                                        <span class="content-message-text">Lorem ipsum dolor sit amet consectetur.</span>
+                                    </span>
+                                    <span class="content-message-more">
+                                        <span class="content-message-time">12:30</span>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                      
+                    </div>
+                </div>
+                <!-- end: Content side -->
+                <!-- start: Conversation -->
+                <div class="conversation conversation-default active">
+                    <i class="ri-chat-3-line"></i>
+                    <p>Select chat and view conversation!</p>
+                </div>
+                <div class="conversation" id="conversation-1">
+                    <div class="conversation-top">
+                        <button type="button" class="conversation-back"><i class="ri-arrow-left-line"></i></button>
+                        <div class="conversation-user">
+                            <img class="conversation-user-image" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
+                            <div>
+                                <div class="conversation-user-name">Someone</div>
+                                <div class="conversation-user-status online">online</div>
+                            </div>
+                        </div>
+                        <div class="conversation-buttons">
+                            
+                            <button type="button"><i class="ri-information-line"></i></button>
+                        </div>
+                    </div>
+                    <div class="conversation-main">
+                        <ul class="conversation-wrapper">
+                            <div class="coversation-divider"><span>Today</span></div>
+                            <li class="conversation-item me">
+                                <div class="conversation-item-side">
+                                    <img class="conversation-item-image" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
+                                </div>
+                                <div class="conversation-item-content">
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet natus repudiandae quisquam sequi nobis suscipit consequatur rerum alias odio repellat!</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, tenetur!</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="conversation-item">
+                                <div class="conversation-item-side">
+                                    <img class="conversation-item-image" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
+                                </div>
+                                <div class="conversation-item-content">
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque eos ab in?</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, debitis. Iste natus est aliquam ipsum doloremque fugiat, quidem eos autem? Dolor quisquam laboriosam enim cum laborum suscipit perferendis adipisci praesentium.</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="conversation-item me">
+                                <div class="conversation-item-side">
+                                    <img class="conversation-item-image" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
+                                </div>
+                                <div class="conversation-item-content">
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas, eos, magni temporibus, placeat consectetur nobis incidunt dicta a culpa vel esse. Facilis fugiat possimus eveniet accusamus dignissimos pariatur inventore animi rem vero, eligendi obcaecati fugit quaerat? Officia ex quod eaque maxime ipsam, tempore error laboriosam laborum, magnam ipsum doloremque quas.</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Temporibus debitis odio maiores perferendis ipsa repudiandae amet blanditiis quod. Ullam, dolorum.</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium blanditiis ea, voluptatum, eveniet at harum minima maxime enim aut non, iure expedita excepturi tempore nostrum quasi natus voluptas dolore ducimus!</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="conversation-form">
+                        <button type="button" class="conversation-form-button"><i class="ri-emotion-line"></i></button>
+                        <div class="conversation-form-group">
+                            <textarea class="conversation-form-input" rows="1" placeholder="Mensagem..."></textarea>
+                            
+                        </div>
+                        <button type="button" class="conversation-form-button conversation-form-submit"><i class="ri-send-plane-2-line"></i></button>
+                    </div>
+                </div>
+                <div class="conversation" id="conversation-2">
+                    <div class="conversation-top">
+                        <button type="button" class="conversation-back"><i class="ri-arrow-left-line"></i></button>
+                        <div class="conversation-user">
+                            <img class="conversation-user-image" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
+                            <div>
+                                <div class="conversation-user-name">Someone 1</div>
+                                <div class="conversation-user-status online">online</div>
+                            </div>
+                        </div>
+                        <div class="conversation-buttons">
+                           
+                            <button type="button"><i class="ri-information-line"></i></button>
+                        </div>
+                    </div>
+                    <div class="conversation-main">
+                        <ul class="conversation-wrapper">
+                            <div class="coversation-divider"><span>Today</span></div>
+                            <li class="conversation-item me">
+                                <div class="conversation-item-side">
+                                    <img class="conversation-item-image" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
+                                </div>
+                                <div class="conversation-item-content">
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet natus repudiandae quisquam sequi nobis suscipit consequatur rerum alias odio repellat!</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, tenetur!</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="conversation-item">
+                                <div class="conversation-item-side">
+                                    <img class="conversation-item-image" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
+                                </div>
+                                <div class="conversation-item-content">
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque eos ab in?</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, debitis. Iste natus est aliquam ipsum doloremque fugiat, quidem eos autem? Dolor quisquam laboriosam enim cum laborum suscipit perferendis adipisci praesentium.</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="conversation-item me">
+                                <div class="conversation-item-side">
+                                    <img class="conversation-item-image" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
+                                </div>
+                                <div class="conversation-item-content">
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas, eos, magni temporibus, placeat consectetur nobis incidunt dicta a culpa vel esse. Facilis fugiat possimus eveniet accusamus dignissimos pariatur inventore animi rem vero, eligendi obcaecati fugit quaerat? Officia ex quod eaque maxime ipsam, tempore error laboriosam laborum, magnam ipsum doloremque quas.</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Temporibus debitis odio maiores perferendis ipsa repudiandae amet blanditiis quod. Ullam, dolorum.</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="conversation-item-wrapper">
+                                        <div class="conversation-item-box">
+                                            <div class="conversation-item-text">
+                                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium blanditiis ea, voluptatum, eveniet at harum minima maxime enim aut non, iure expedita excepturi tempore nostrum quasi natus voluptas dolore ducimus!</p>
+                                                <div class="conversation-item-time">12:30</div>
+                                            </div>
+                                            <div class="conversation-item-dropdown">
+                                                <button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+                                                <ul class="conversation-item-dropdown-list">
+                                                    <li><a href="#"><i class="ri-share-forward-line"></i> Respond</a></li>
+                                                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="conversation-form">
+                        <button type="button" class="conversation-form-button"><i class="ri-emotion-line"></i></button>
+                        <div class="conversation-form-group">
+                            <textarea class="conversation-form-input" rows="1" placeholder="Mensagem..."></textarea>
+                            
+                        </div>
+                        <button type="button" class="conversation-form-button conversation-form-submit"><i class="ri-send-plane-2-line"></i></button>
+                    </div>
+                </div>
+                <!-- end: Conversation -->
+            </div>
+            <!-- end: Content -->
+        </div> 
+    </section>
+    <!-- end: Chat -->
+    
+    <script src="script.js"></script>
+</body>
+</html>
