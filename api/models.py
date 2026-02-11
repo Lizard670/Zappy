@@ -36,7 +36,8 @@ class Chat(models.Model):
     nome = models.CharField(max_length=512)
     descricao = models.TextField(max_length=512, blank=True, null=True)
     id_usuario_dono = models.ForeignKey(Usuario, on_delete=models.CASCADE, db_column='id_usuario_dono')
-    
+    membros = models.ManyToManyField(Usuario, through="Membro")
+
     class Meta:
         db_table = 'chat'
         verbose_name = 'Chat'
@@ -49,6 +50,7 @@ class Chat(models.Model):
 class Mensagem(models.Model):
     id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, db_column='id_usuario')
     id_chat = models.ForeignKey(Chat, on_delete=models.CASCADE, db_column='id_chat')
+    imagens = models.ManyToManyField(Imagem)
     id_mensagem_respondida = models.ForeignKey(
         'self', 
         on_delete=models.SET_NULL, 
@@ -92,20 +94,6 @@ class Imagem(models.Model):
         return f"Imagem {self.id_imagem} - {self.caminho_imagem}"
 
 
-class ImagemMensagem(models.Model):
-    id_imagem = models.ForeignKey(Imagem, on_delete=models.CASCADE, db_column='id_imagem')
-    id_mensagem = models.ForeignKey(Mensagem, on_delete=models.CASCADE, db_column='id_mensagem')
-    
-    class Meta:
-        db_table = 'imagem_mensagem'
-        verbose_name = 'Imagem da Mensagem'
-        verbose_name_plural = 'Imagens das Mensagens'
-        unique_together = ['id_imagem', 'id_mensagem']
-    
-    def __str__(self):
-        return f"Imagem {self.id_imagem.id_imagem} na Mensagem {self.id_mensagem.id_mensagem}"
-
-
 class Membro(models.Model):
     id_chat = models.ForeignKey(Chat, on_delete=models.CASCADE, db_column='id_chat')
     id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, db_column='id_usuario')
@@ -116,11 +104,6 @@ class Membro(models.Model):
         db_table = 'membro'
         verbose_name = 'Membro'
         verbose_name_plural = 'Membros'
-        unique_together = ['id_chat', 'id_usuario']
-        indexes = [
-            models.Index(fields=['id_usuario']),
-            models.Index(fields=['id_chat']),
-        ]
     
     def __str__(self):
         admin_status = " (Admin)" if self.administrador else ""
