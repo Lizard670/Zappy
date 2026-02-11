@@ -49,6 +49,12 @@ const ApiService = {
 
 class ZappyApp {
     constructor() {
+        // Mock Auth Check
+        if (!sessionStorage.getItem('zappy_auth')) {
+            window.location.href = "auth/index.html";
+            return;
+        }
+
         this.currentChatId = null;
         this.init();
     }
