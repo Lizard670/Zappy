@@ -47,6 +47,18 @@ class Chat(models.Model):
         return f"{self.nome} (Dono: {self.id_usuario_dono.username})"
 
 
+class Imagem(models.Model):
+    caminho_imagem = models.CharField(max_length=512)
+    
+    class Meta:
+        db_table = 'imagem'
+        verbose_name = 'Imagem'
+        verbose_name_plural = 'Imagens'
+    
+    def __str__(self):
+        return f"Imagem {self.id_imagem} - {self.caminho_imagem}"
+
+
 class Mensagem(models.Model):
     id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, db_column='id_usuario')
     id_chat = models.ForeignKey(Chat, on_delete=models.CASCADE, db_column='id_chat')
@@ -80,18 +92,6 @@ class Mensagem(models.Model):
     
     def __str__(self):
         return f"Mensagem {self.id_mensagem} de {self.id_usuario.username}"
-
-
-class Imagem(models.Model):
-    caminho_imagem = models.CharField(max_length=512)
-    
-    class Meta:
-        db_table = 'imagem'
-        verbose_name = 'Imagem'
-        verbose_name_plural = 'Imagens'
-    
-    def __str__(self):
-        return f"Imagem {self.id_imagem} - {self.caminho_imagem}"
 
 
 class Membro(models.Model):
