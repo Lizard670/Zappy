@@ -61,19 +61,7 @@ class Mensagem(models.Model):
     id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     id_chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
     imagens = models.ManyToManyField(Imagem)
-    id_mensagem_respondida = models.ForeignKey(
-        'self', 
-        on_delete=models.SET_NULL, 
-        null=True, 
-        blank=True,
-    )
     texto = models.TextField(max_length=8192, blank=True, null=True)
-    id_chat_encaminhada = models.ForeignKey(
-        Chat, 
-        on_delete=models.SET_NULL, 
-        null=True, 
-        blank=True,
-    )
     data_envio = models.DateTimeField(auto_now_add=True)
     
     class Meta:
