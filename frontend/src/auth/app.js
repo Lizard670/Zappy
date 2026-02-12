@@ -10,7 +10,7 @@ const container = document.querySelector(".container");
 const loginForm = document.querySelector("#login-form");
 const signupForm = document.querySelector("#signup-form");
 
-
+// Troca de painéis
 sign_up_btn.addEventListener("click", () => {
   container.classList.add("sign-up-mode");
 });
@@ -19,18 +19,30 @@ sign_in_btn.addEventListener("click", () => {
   container.classList.remove("sign-up-mode");
 });
 
-// Simulação de Redirecionamento
-const handleAuth = (e) => {
-  e.preventDefault();
-  console.log("Autenticando...");
+// Mock de Autenticação
+const doLogin = (e) => {
+  if (e) e.preventDefault();
 
-  // Simula salvamento de sessão
-  sessionStorage.setItem('zappy_auth', 'true');
-
-  // Redireciona para o chat principal
-  // Como estamos em src/auth/index.html, o chat está em ../index.html
-  window.location.href = "../index.html";
+  try {
+    localStorage.setItem('zappy_auth', 'true');
+    // Redirecionamento forçado com sinal de hash para compatibilidade file://
+    const target = "../index.html#auth";
+    window.location.href = target;
+  } catch (err) {
+    alert("Erro ao salvar sessão: " + err.message);
+  }
 };
 
-if (loginForm) loginForm.addEventListener("submit", handleAuth);
-if (signupForm) signupForm.addEventListener("submit", handleAuth);
+
+if (loginForm) {
+  loginForm.addEventListener("submit", doLogin);
+}
+if (signupForm) {
+  signupForm.addEventListener("submit", doLogin);
+}
+
+
+document.querySelectorAll('input[type="submit"]').forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    doLogin(e);
+  });

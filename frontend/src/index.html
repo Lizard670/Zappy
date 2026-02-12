@@ -48,7 +48,7 @@
                     </form>
                     <div class="content-messages">
                         <ul class="content-messages-list">
-                            <!-- JS preenche aqui -->
+                            <!-- JS fills here -->
                         </ul>
                     </div>
                 </div>
@@ -63,9 +63,90 @@
                 <div id="conversations-wrapper">
                     <!-- JS injects .conversation here -->
                 </div>
+                <input type="file" id="image-input" accept="image/*" style="display: none;">
             </div>
         </div>
     </section>
+
+    <div id="image-preview-modal" class="image-modal">
+        <div class="image-modal-content">
+            <div class="image-modal-header">
+                <h3>Preview da Imagem</h3>
+                <button id="close-preview"><i class="ri-close-line"></i></button>
+            </div>
+            <div class="image-modal-body">
+                <img id="preview-img-tag" src="" alt="Preview">
+                <textarea id="caption-input" placeholder="Adicione uma legenda..."></textarea>
+            </div>
+            <div class="image-modal-footer">
+                <button id="send-image-btn" class="btn-primary">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="voice-recording-overlay" class="voice-overlay">
+        <div class="voice-overlay-content">
+            <button id="cancel-recording" class="voice-btn-cancel"><i class="ri-delete-bin-line"></i></button>
+            <div class="voice-waveform-container">
+                <canvas id="voice-waveform"></canvas>
+            </div>
+            <div class="voice-timer">00:00</div>
+            <button id="stop-send-recording" class="voice-btn-send"><i class="ri-send-plane-2-line"></i></button>
+        </div>
+    </div>
+
+    <div id="my-profile-drawer" class="drawer">
+        <div class="drawer-header">
+            <button class="drawer-close"><i class="ri-arrow-left-line"></i></button>
+            <h3>Meu Perfil</h3>
+        </div>
+        <div class="drawer-body">
+            <div class="profile-edit-avatar">
+                <img id="my-profile-img" src="" alt="">
+                <button class="edit-avatar-btn"><i class="ri-camera-line"></i></button>
+            </div>
+            <div class="profile-field">
+                <label>Nome</label>
+                <input type="text" id="my-profile-name" placeholder="Seu nome">
+            </div>
+            <div class="profile-field">
+                <label>Nome de usuário</label>
+                <input type="text" id="my-profile-username" placeholder="@usuario">
+            </div>
+            <div class="profile-field">
+                <label>Bio</label>
+                <textarea id="my-profile-bio" placeholder="Fale um pouco sobre você..."></textarea>
+            </div>
+            <button id="save-profile-btn" class="btn-primary" style="width: 100%; margin-top: 20px;">Salvar
+                Alterações</button>
+        </div>
+    </div>
+
+    <!-- Contact Profile Drawer -->
+    <div id="contact-profile-drawer" class="drawer">
+        <div class="drawer-header">
+            <button class="drawer-close"><i class="ri-close-line"></i></button>
+            <h3>Info. do Contato</h3>
+        </div>
+        <div class="drawer-body">
+            <div class="profile-view-avatar">
+                <img id="contact-profile-img" src="" alt="">
+            </div>
+            <div class="profile-view-info">
+                <h2 id="contact-profile-name"></h2>
+                <p id="contact-profile-username" class="text-muted"></p>
+                <div class="profile-view-status">
+                    <span class="status-indicator online"></span>
+                    <span id="contact-profile-status">online</span>
+                </div>
+            </div>
+            <hr>
+            <div class="profile-view-section">
+                <label>Bio</label>
+                <p id="contact-profile-bio"></p>
+            </div>
+        </div>
+    </div>
 
     <script src="js/app.js"></script>
 </body>
