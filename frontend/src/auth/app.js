@@ -20,12 +20,11 @@ sign_in_btn.addEventListener("click", () => {
 });
 
 // Mock de Autenticação
-const doLogin = (e) => {
+const handleLogin = (e) => {
   if (e) e.preventDefault();
 
   try {
     localStorage.setItem('zappy_auth', 'true');
-    // Redirecionamento forçado com sinal de hash para compatibilidade file://
     const target = "../index.html#auth";
     window.location.href = target;
   } catch (err) {
@@ -33,16 +32,45 @@ const doLogin = (e) => {
   }
 };
 
+const handleSignup = (e) => {
+  if (e) e.preventDefault();
+
+  const username = signupForm.querySelector('input[placeholder="Nome de usuário"]').value;
+  const email = signupForm.querySelector('input[type="email"]').value;
+  const password = signupForm.querySelector('input[type="password"]').value;
+
+  const validatedData = {
+    user: {
+      username: username,
+      email: email,
+      password: password
+    },
+    bio: "", // Placeholder para o modelo Usuario
+    caminho_foto: null // Placeholder para o modelo Usuario
+  };
+
+  console.log("[Zappy Auth] validated_data:", validatedData);
+
+  try {
+    localStorage.setItem('zappy_auth', 'true');
+    const target = "../index.html#auth";
+    window.location.href = target;
+  } catch (err) {
+    alert("Erro ao salvar sessão: " + err.message);
+  }
+};
 
 if (loginForm) {
-  loginForm.addEventListener("submit", doLogin);
+  loginForm.addEventListener("submit", handleLogin);
 }
 if (signupForm) {
-  signupForm.addEventListener("submit", doLogin);
+  signupForm.addEventListener("submit", handleSignup);
 }
 
+document.querySelectorAll('.sign-in-form .btn').forEach(btn => {
+  btn.addEventListener("click", handleLogin);
+});
 
-document.querySelectorAll('input[type="submit"]').forEach(btn => {
-  btn.addEventListener("click", (e) => {
-    doLogin(e);
-  });
+document.querySelectorAll('.sign-up-form .btn').forEach(btn => {
+  btn.addEventListener("click", handleSignup);
+});
