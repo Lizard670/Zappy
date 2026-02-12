@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import status, generics, response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
-from .models import Usuario, Imagem, Mensagem, Chat, Membro
+from core.models import Usuario, Imagem, Mensagem, Chat, Membro
 from .serializers import UsuarioSerializer, ImagemSerializer, MensagemSerializer, MembroSerializer, ChatSerializer
 
 def confirmar_presenca(username, chat):

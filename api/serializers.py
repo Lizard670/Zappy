@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Usuario, Mensagem, Imagem, Membro, Chat
+from core.models import Usuario, Mensagem, Imagem, Membro, Chat
 from django.contrib.auth.models import User
 
 
