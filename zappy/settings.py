@@ -23,9 +23,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'api',
     'rest_framework',
+    'rest_framework.authtoken',
+
+    'api',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -98,3 +106,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
+
+# Prefixo para acessar as mídias via URL
+MEDIA_URL = 'media/'
+
+# Caminho até a pasta das mídias
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
