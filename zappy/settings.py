@@ -106,8 +106,13 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Prefixo para acessar os arquivos estáticos via URL
 STATIC_URL = 'static/'
+
+# Caminho até a pasta dos arquivos estáticos
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
 
 # Prefixo para acessar as mídias via URL
 MEDIA_URL = 'media/'
