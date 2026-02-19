@@ -53,3 +53,38 @@ def login(request):
                     messages.error(request, 'Erro ao autenticar após registro.')
 
     return render(request, 'login/index.html')
+
+
+@login_required(login_url='/login/')
+def user_profile(request):
+    usuario, _ = Usuario.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        full_name = request.POST.get('full_name', '')
+        bio = request.POST.get('bio', '')
+        foto = request.FILES.get('foto')
+
+        # Checa se o username é diferente do atual e se já existe outro usuário com esse username
+        if username and username != request.user.username:
+            if User.objects.filter(username=username).exclude(pk=request.user.pk).exists():
+                messages.error(request, 'Username já existe.')
+                return redirect('client:user_profile')
+            request.user.username = username
+
+        request.user.email = email or request.user.email
+        # Guarda o nome completo no campo de primeiro nome
+        request.user.first_name = full_name
+        request.user.save()
+
+        usuario.bio = bio
+        if foto:
+            usuario.foto = foto
+        usuario.save()
+
+        messages.success(request, 'Perfil atualizado com sucesso.')
+        return redirect('client:user_profile')
+
+    context = {'usuario': usuario, 'user': request.user}
+    return render(request, 'user_profile/index.html', context)
