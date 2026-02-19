@@ -1,14 +1,23 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import status, generics, response
+from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from core.models import Usuario, Imagem, Mensagem, Chat, Membro
 from .serializers import UsuarioSerializer, ImagemSerializer, MensagemSerializer, MembroSerializer, ChatSerializer
 
-def confirmar_presenca(username, chat):
-    """Se o usuario não estiver no chat, vai levantar uma exceção de User.DoesNotExist"""
-    user = User.objects.get(username=username)
-    Chat.objects.get(pk=chat).membros.all().get(pk=user.id)
+def confirmar_presenca(user_or_username, chat):
+    """Verifica se o usuário (ou username) é membro do chat.
+    Se não for, levanta User.DoesNotExist para compatibilidade com chamadas existentes.
+    """
+    if isinstance(user_or_username, User):
+        user = user_or_username
+    else:
+        user = User.objects.get(username=user_or_username)
+    chat_obj = Chat.objects.get(pk=chat)
+    if not chat_obj.membros.filter(pk=user.id).exists():
+        raise User.DoesNotExist()
 
 class UsuariosListCreate(generics.ListCreateAPIView):
     queryset = Usuario.objects.all()
@@ -28,31 +37,38 @@ class ImagemRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     
 
 class MensagensListCreate(generics.ListCreateAPIView):
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Mensagem.objects.all()
     serializer_class = MensagemSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 class MensagensChatListCreate(generics.ListCreateAPIView):
     authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
-    queryset = Mensagem.objects.all().filter()
     serializer_class = MensagemSerializer
 
-    def get(self, request, *args, **kwargs):
-        resposta = super().get(self, request, *args, **kwargs)
-        resposta.data = [mensagem 
-                         for mensagem in resposta.data 
-                         if mensagem["chat"] == kwargs["chat"]]
+    def get_queryset(self):
+        chat = self.kwargs.get('chat')
+        return Mensagem.objects.filter(chat=chat).order_by('data_envio')
 
+    def get(self, request, *args, **kwargs):
         try:
             confirmar_presenca(request.user, kwargs["chat"])
         except User.DoesNotExist:
-            content = {"detail": "User not authorized."}
-            return response.Response(content, status=status.HTTP_403_FORBIDDEN)
-        
-        return resposta
+            raise PermissionDenied(detail="User not authorized.")
+        return super().get(request, *args, **kwargs)
+
+    def perform_create(self, serializer):
+        # Ensure user is assigned from request, not client data
+        serializer.save(user=self.request.user)
 
 class MensagemRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     queryset = Mensagem.objects.all()
     serializer_class = MensagemSerializer
@@ -60,14 +76,15 @@ class MensagemRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 
     def get(self, request, *args, **kwargs):
         resposta = super().get(self, request, *args, **kwargs)
-        
         try:
             confirmar_presenca(request.user, resposta.data["chat"])
         except User.DoesNotExist:
-            content = {"detail": "User not authorized."}
-            return response.Response(content, status=status.HTTP_403_FORBIDDEN)
-        
+            raise PermissionDenied(detail="User not authorized.")
         return resposta
+
+    def perform_update(self, serializer):
+        # Prevent changing the message owner
+        serializer.save()
     
 
 class MembrosListCreate(generics.ListCreateAPIView):

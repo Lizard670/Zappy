@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'core',
+    'client',
     'api',
 
     'rest_framework',
@@ -51,7 +52,7 @@ ROOT_URLCONF = 'zappy.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,8 +106,13 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Prefixo para acessar os arquivos estáticos via URL
 STATIC_URL = 'static/'
+
+# Caminho até a pasta dos arquivos estáticos
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
 
 # Prefixo para acessar as mídias via URL
 MEDIA_URL = 'media/'
