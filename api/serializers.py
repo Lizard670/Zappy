@@ -56,6 +56,35 @@ class ChatSerializer(serializers.ModelSerializer):
 class MensagemSerializer(serializers.ModelSerializer):
     imagens = ImagemSerializer(many=True, required=False)
 
+    # don't allow clients to set the `user` field directly
+    user = UserSerializer(read_only=True)
+    user_foto = serializers.SerializerMethodField()
+
     class Meta:
         model = Mensagem
-        fields = ["id", "user", "chat", "texto", "data_envio", "imagens"]
+        fields = ["id", "user", "user_foto", "chat", "texto", "data_envio", "imagens"]
+        read_only_fields = ["user", "data_envio"]
+
+    def create(self, validated_data):
+        imagens_data = validated_data.pop('imagens', [])
+
+        # Mensagem creation may receive `user` via serializer.save(user=...) in the view
+        mensagem = Mensagem.objects.create(**validated_data)
+
+        # create Imagem objects and link them
+        for img in imagens_data:
+            # img is expected to be a dict with key 'arquivo'
+            imagem = Imagem.objects.create(**img)
+            mensagem.imagens.add(imagem)
+
+        return mensagem
+
+    def get_user_foto(self, obj):
+        try:
+            # access related Usuario model for image
+            foto = obj.user.usuario.foto
+            if foto:
+                return foto.url
+        except Exception:
+            pass
+        return None

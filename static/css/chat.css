@@ -428,17 +428,23 @@ body {
 .conversation-item {
     display: flex;
     align-items: flex-end;
-    flex-direction: row-reverse;
+    flex-direction: row;
+    justify-content: flex-start;
     margin-bottom: 16px;
 }
 .conversation-item.me {
-    flex-direction: row;
+    justify-content: flex-end;
 }
 .conversation-item-side {
-    margin-left: 8px;
+    /* default: avatar on the left, margin to separate from content */
+    order: 1;
+    margin-right: 8px;
 }
 .conversation-item.me .conversation-item-side {
-    margin-right: 8px;
+    /* for messages from current user: avatar should appear to the right */
+    order: 2;
+    margin-right: 0;
+    margin-left: 8px;
 }
 .conversation-item-image {
     width: 24px;
@@ -448,7 +454,13 @@ body {
     display: block;
 }
 .conversation-item-content {
-    width: 100%;
+    order: 2;
+    width: auto;
+    display: flex;
+    align-items: flex-end;
+}
+.conversation-item.me .conversation-item-content {
+    order: 1;
 }
 .conversation-item-wrapper:not(:last-child) {
     margin-bottom: 8px;
@@ -456,7 +468,7 @@ body {
 .conversation-item-box {
     max-width: 720px;
     position: relative;
-    margin-left: auto;
+    margin-left: unset;
 }
 .conversation-item.me .conversation-item-box {
     margin-left: unset;
