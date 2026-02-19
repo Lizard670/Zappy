@@ -9,6 +9,11 @@
     <title>Chat</title>
 </head>
 <body>
+    {% if user.is_authenticated %}
+    <div style="padding:8px; text-align:right;">
+        <a href="{% url 'client:logout' %}">Logout</a>
+    </div>
+    {% endif %}
 
     <!-- start: Chat -->
     <section class="chat-section">
